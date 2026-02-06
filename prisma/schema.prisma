@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String
+  role Role
+  shoppingSessions ShoppingSession[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id])
+  shoppingItems ShoppingItem[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique
+  products Product[]
+}
+
+model ShoppingSession {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  items ShoppingItem[]
+  createdAt DateTime @default(now())
+}
+
+model ShoppingItem {
+  id Int @id @default(autoincrement())
+
+  sessionId Int
+  productId Int
+  
+  quantity Int @default(1)
+  checked Boolean @default(false)
+
+  session ShoppingSession @relation(fields: [sessionId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
