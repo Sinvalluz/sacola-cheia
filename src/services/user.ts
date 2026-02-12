@@ -1,9 +1,11 @@
 import { randomInt } from 'node:crypto';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { AppError } from '@/lib/errors/AppError';
 import { prisma } from '@/lib/prisma';
+import 'dotenv/config';
 
-export default async function createUser(
+export async function createUser(
 	email: string,
 	name: string,
 	password: string,
@@ -20,4 +22,24 @@ export default async function createUser(
 	return await prisma.user.create({
 		data: { email, name, password: passwordHash, role: 'USER' },
 	});
+}
+
+export async function authUser(email: string, password: string) {
+	const user = await prisma.user.findUnique({ where: { email } });
+
+	if (!user) throw new AppError('Email não cadastrado', 400);
+
+	const isValidPassword = await compare(password, user.password);
+
+	if (!isValidPassword) throw new AppError('Senha incorreta', 400);
+
+	const token = jwt.sign(
+		{ id: user.id, email: user.email },
+		process.env.JWT_SECRET!,
+		{
+			expiresIn: '24h',
+		},
+	);
+
+	return token;
 }
