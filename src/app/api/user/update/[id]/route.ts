@@ -1,26 +1,30 @@
+import type { NextRequest } from 'next/server';
 import z, { ZodError } from 'zod';
 import { AppError } from '@/lib/errors/AppError';
-import { createUser } from '@/services/user';
+import { updateUser } from '@/services/user';
 import { type UserRequest, UserRequestSchema } from '@/types/user';
 
-export async function POST(request: Request) {
+export async function PUT(
+	request: NextRequest,
+	{ params }: { params: Promise<{ id: string }> },
+) {
 	try {
+		const id = Number((await params).id);
+
 		const body: UserRequest = await request.json();
 
 		UserRequestSchema.parse(body);
 
-		const user = await createUser(body.email, body.name, body.password);
+		const requestToken = request.headers.get('authorization');
 
-		return new Response(
-			JSON.stringify({
-				email: user.email,
-				name: user.name,
-			}),
-			{
-				status: 201,
-				headers: { 'Content-Type': 'application/json' },
-			},
-		);
+		if (!requestToken) throw new AppError('Token não enviado', 401);
+
+		const token = await updateUser(id, body, requestToken);
+
+		return new Response(JSON.stringify({ token }), {
+			status: 200,
+			headers: { 'Content-Type': 'application/json' },
+		});
 	} catch (error) {
 		if (error instanceof AppError) {
 			return new Response(JSON.stringify(error.message), {
