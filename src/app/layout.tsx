@@ -1,15 +1,12 @@
 import type { Metadata } from 'next';
-import { Roboto, Roboto_Mono } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 
-const robotoSans = Roboto({
-	variable: '--font-geist-sans',
+const poppins = Poppins({
 	subsets: ['latin'],
-});
-
-const robotoMono = Roboto_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
+	display: 'swap',
+	variable: '--font-poppins',
+	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
@@ -24,9 +21,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='pt-BR'>
-			<body
-				className={`${robotoSans.variable} ${robotoMono.variable} antialiased`}
-			>
+			<body className={`${poppins.variable} antialiased`}>
 				{children}
 			</body>
 		</html>
