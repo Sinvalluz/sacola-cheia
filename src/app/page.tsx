@@ -3,7 +3,7 @@ import ImageBag from '@/components/ui/imageBag';
 
 export default function Home() {
 	return (
-		<div className='min-h-screen w-full'>
+		<div className='min-h-screen w-full bg-white dark:bg-black text-black dark:text-white transition-all duration-300'>
 			<Header />
 			<ImageBag
 				height={256}

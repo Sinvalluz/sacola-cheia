@@ -1,18 +1,27 @@
-import { Moon, Sun } from 'lucide-react';
+'use client';
 
-// import { useTheme } from '../../../contexts/ThemeContext';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { Button } from './button';
 
 const DarkLightBtn = () => {
-	// const { darkMode, toggleTheme } = useTheme();
+	const { theme, setTheme } = useTheme();
+
+	function toggleTheme() {
+		setTheme(theme === 'light' ? 'dark' : 'light');
+	}
+
 	return (
-		<button
+		<Button
+			variant={'outline'}
+			size={'icon'}
 			type='button'
-			// onClick={toggleTheme}
-			className='cursor-pointer'
+			onClick={toggleTheme}
+			className='cursor-pointer rounded-full border-0'
 		>
-			{/* {darkMode ? <Moon /> : <Sun className=' text-primary-dark' />} */}
-			<Moon />
-		</button>
+			<Sun className='absolute h-10 w-10 rotate-0 scale-100 dark:-rotate-90 dark:scale-0' />
+			<Moon className='absolute h-10 w-10 rotate-90 scale-0 dark:rotate-0 dark:scale-100' />
+		</Button>
 	);
 };
 
