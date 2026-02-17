@@ -5,7 +5,7 @@ import GithubIcon from '@/components/ui/githubIcon';
 export default function Header() {
 	return (
 		<header className='flex justify-between px-6 py-4 items-center'>
-			<Link href='#'>
+			<Link href='/'>
 				<h1 className='text-2xl font-semibold'>Sacola cheia</h1>
 			</Link>
 			<div className='flex gap-4 items-center'>
