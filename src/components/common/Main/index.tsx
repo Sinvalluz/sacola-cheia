@@ -10,12 +10,10 @@ export default function Main() {
 				width={256}
 			/>
 			<div className='space-y-4 text-center'>
-				<h2 className='text-2xl font-semibold'>
-					Organize e maximize suas idas ao supermercado.
-				</h2>
+				<h2 className='text-2xl font-semibold'>Organize e maximize suas idas ao supermercado.</h2>
 				<p className='text-base'>
-					Planeje sua lista de compras com clareza, evite gastos
-					impulsivos e volte para casa com tudo o que precisa
+					Planeje sua lista de compras com clareza, evite gastos impulsivos e volte para casa com tudo o que
+					precisa
 				</p>
 			</div>
 
@@ -27,7 +25,7 @@ export default function Main() {
 					className='cursor-pointer'
 					variant={'secondary'}
 				>
-					<Link href={'/cadastro'}>Cadastro</Link>
+					<Link href={'/register'}>Cadastro</Link>
 				</Button>
 			</div>
 		</main>
