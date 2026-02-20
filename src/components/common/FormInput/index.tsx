@@ -8,7 +8,7 @@ type FormInputProps = InputHTMLAttributes<HTMLInputElement> & {
 
 export default function FormInput({ error, ...props }: FormInputProps) {
 	return (
-		<div className='h-16'>
+		<div>
 			<Input
 				className='bg-blue-50 focus-visible:ring-blue-500 border border-blue-600'
 				{...props}
