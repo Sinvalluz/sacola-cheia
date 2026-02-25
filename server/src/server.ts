@@ -1,16 +1,26 @@
-import Fastify from 'fastify';
+import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from '@fastify/swagger-ui';
+import fastify from 'fastify';
+import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
-const fastify = Fastify({
-	logger: true,
+const app = fastify();
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
+app.register(fastifySwagger, {
+	openapi: {
+		info: {
+			title: 'API Sacola Cheia',
+			description: 'Documentação da API do site Sacola cheia',
+			version: '1.0.0',
+		},
+	},
+	transform: jsonSchemaTransform,
 });
 
-fastify.get('/', (_request, reply) => {
-	reply.send({ hello: 'world' });
+app.register(fastifySwaggerUi, {
+	routePrefix: '/docs',
 });
 
-fastify.listen({ port: 3000 }, (err, _address) => {
-	if (err) {
-		fastify.log.error(err);
-		process.exit(1);
-	}
-});
+app.listen({ port: 3000 }).then(() => console.log('Server running on http://localhost:3000'));
