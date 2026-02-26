@@ -19,3 +19,16 @@ export const UserResponseSchema = z.object({
 });
 
 export type UserResponse = z.infer<typeof UserResponseSchema>;
+
+export const UserAuthSchema = z.object({
+	email: z.email('Digite um email válido'),
+	password: z.string({ message: 'A senha é obrigatória' }).min(6, 'A senha deve ter no mínimo 6 caracteres'),
+});
+
+export type UserAuthRequest = z.infer<typeof UserAuthSchema>;
+
+export const UserAuthResponseSchema = z.object({
+	token: z.string(),
+});
+
+export type UserAuthResponse = z.infer<typeof UserAuthResponseSchema>;
