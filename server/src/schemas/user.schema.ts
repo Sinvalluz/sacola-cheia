@@ -3,13 +3,13 @@ import { $Enums } from '../generated/prisma/client';
 
 export const UserCreateSchema = z.object({
 	email: z.email('Digite um email válido'),
-	name: z.string().min(1, 'Digite um nome válido'),
-	password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+	name: z.string({ message: 'O nome é obrigatória' }).min(1, 'Digite um nome válido'),
+	password: z.string({ message: 'A senha é obrigatória' }).min(6, 'A senha deve ter no mínimo 6 caracteres'),
 });
 
 export type UserCreateRequest = z.infer<typeof UserCreateSchema>;
 
-export const UserResponseSchema = z.object({
+export const UserCreateResponseSchema = z.object({
 	id: z.number(),
 	email: z.email(),
 	name: z.string(),
@@ -18,7 +18,7 @@ export const UserResponseSchema = z.object({
 	updatedAt: z.date(),
 });
 
-export type UserResponse = z.infer<typeof UserResponseSchema>;
+export type UserCreateResponse = z.infer<typeof UserCreateResponseSchema>;
 
 export const UserAuthSchema = z.object({
 	email: z.email('Digite um email válido'),

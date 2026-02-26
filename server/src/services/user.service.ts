@@ -3,10 +3,10 @@ import { compare, hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { AppError } from '../lib/errors/AppError';
 import { prisma } from '../lib/prisma';
-import type { UserAuthRequest, UserCreateRequest, UserResponse } from '../schemas/user.schema';
+import type { UserAuthRequest, UserCreateRequest, UserCreateResponse } from '../schemas/user.schema';
 import 'dotenv/config';
 
-export async function createUser(userRequest: UserCreateRequest): Promise<UserResponse> {
+export async function createUser(userRequest: UserCreateRequest): Promise<UserCreateResponse> {
 	const existUserByEmail = await prisma.user.findUnique({
 		where: { email: userRequest.email },
 	});
