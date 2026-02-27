@@ -1,15 +1,33 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import type { UserAuthRequest, UserCreateRequest } from '../schemas/user.schema';
-import { authUser, createUser } from '../services/user.service';
+import { AppError } from '../lib/errors/AppError';
+import type { UserAuthRequest, UserCreateRequest, UserUpdateRequest } from '../schemas/user.schema';
+import { authUser, createUser, updateUser } from '../services/user.service';
 
 export async function createUserHandler(request: FastifyRequest<{ Body: UserCreateRequest }>, reply: FastifyReply) {
 	const body = request.body;
 	const user = await createUser(body);
-	reply.send(user);
+	return reply.code(201).send(user);
 }
 
 export async function authUserHandler(request: FastifyRequest<{ Body: UserAuthRequest }>, reply: FastifyReply) {
 	const body = request.body;
 	const token = await authUser(body);
-	reply.send({ token });
+	return reply.send({ token });
+}
+
+export async function updateUserHandler(
+	request: FastifyRequest<{ Body: UserUpdateRequest; Params: { id: string } }>,
+	reply: FastifyReply,
+) {
+	const body = request.body;
+
+	const id = Number(request.params.id);
+
+	const requestToken = request.headers.authorization;
+
+	if (!requestToken) throw new AppError('Token não enviado', 401);
+
+	const token = await updateUser(id, body, requestToken);
+
+	return reply.send({ token });
 }
