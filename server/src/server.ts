@@ -8,6 +8,7 @@ import {
 	validatorCompiler,
 	type ZodTypeProvider,
 } from 'fastify-type-provider-zod';
+import { AppError } from './lib/errors/AppError';
 import { userRoute } from './routes/user.routes';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -30,6 +31,18 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, {
 	routePrefix: '/docs',
+});
+
+app.setErrorHandler((error, _request, reply) => {
+	if (error instanceof AppError) {
+		return reply.status(error.statusCode).send({ message: error.message });
+	}
+
+	console.error(error);
+
+	return reply.status(500).send({
+		message: 'Internal Server Error',
+	});
 });
 
 app.register(userRoute);
