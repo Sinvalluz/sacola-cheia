@@ -2,10 +2,15 @@ import fastifyCors from '@fastify/cors';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastify from 'fastify';
-import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import {
+	jsonSchemaTransform,
+	serializerCompiler,
+	validatorCompiler,
+	type ZodTypeProvider,
+} from 'fastify-type-provider-zod';
 import { userRoute } from './routes/user.routes';
 
-const app = fastify();
+const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
