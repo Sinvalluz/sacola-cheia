@@ -87,12 +87,9 @@ export async function updateUser(id: number, userRequest: UserUpdateRequest, tok
 		},
 	});
 
-	const newToken = jwt.sign(
-		{ id: userEntity.id, email: userRequest.email ?? userEntity.email },
-		process.env.JWT_SECRET!,
-		{
-			expiresIn: '24h',
-		},
-	);
-	return newToken;
+	return userRequest.email === userEntity.email
+		? token
+		: jwt.sign({ id: userEntity.id, email: userRequest.email ?? userEntity.email }, process.env.JWT_SECRET!, {
+				expiresIn: '24h',
+			});
 }
