@@ -1,6 +1,8 @@
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyTypeProvider } from 'fastify';
+
 import { authUserHandler, createUserHandler, updateUserHandler } from '../controllers/user.controller';
 import {
+	ParamsUpdateSchema,
 	UserAuthResponseSchema,
 	UserAuthSchema,
 	UserCreateResponseSchema,
@@ -40,13 +42,14 @@ export async function userRoute(app: FastifyInstance) {
 		authUserHandler,
 	);
 
-	app.put(
+	app.withTypeProvider<FastifyTypeProvider>().put(
 		'/user/:id',
 		{
 			schema: {
 				tags: ['users'],
 				description: 'Update the user',
 				body: UserUpdateSchema,
+				params: ParamsUpdateSchema,
 				response: {
 					200: UserUpdateResponseSchema,
 				},

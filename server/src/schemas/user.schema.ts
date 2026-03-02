@@ -43,3 +43,12 @@ export type UserUpdateRequest = z.infer<typeof UserUpdateSchema>;
 export const UserUpdateResponseSchema = z.object({
 	token: z.string(),
 });
+
+export const ParamsUpdateSchema = z.object({
+	id: z.coerce
+		.number('digite um número valido como parâmetro')
+		.int('O id como parâmetro deve ser um número inteiro')
+		.positive('O id como parâmetro deve ser positivo'),
+});
+
+export type ParamsUpdateRequest = z.infer<typeof ParamsUpdateSchema>;

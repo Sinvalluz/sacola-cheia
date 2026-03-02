@@ -1,6 +1,11 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { AppError } from '../lib/errors/AppError';
-import type { UserAuthRequest, UserCreateRequest, UserUpdateRequest } from '../schemas/user.schema';
+import type {
+	ParamsUpdateRequest,
+	UserAuthRequest,
+	UserCreateRequest,
+	UserUpdateRequest,
+} from '../schemas/user.schema';
 import { authUser, createUser, updateUser } from '../services/user.service';
 
 export async function createUserHandler(request: FastifyRequest<{ Body: UserCreateRequest }>, reply: FastifyReply) {
@@ -16,12 +21,12 @@ export async function authUserHandler(request: FastifyRequest<{ Body: UserAuthRe
 }
 
 export async function updateUserHandler(
-	request: FastifyRequest<{ Body: UserUpdateRequest; Params: { id: string } }>,
+	request: FastifyRequest<{ Body: UserUpdateRequest; Params: ParamsUpdateRequest }>,
 	reply: FastifyReply,
 ) {
 	const body = request.body;
 
-	const id = Number(request.params.id);
+	const id = request.params.id;
 
 	const requestToken = request.headers.authorization;
 

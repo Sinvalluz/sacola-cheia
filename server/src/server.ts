@@ -1,4 +1,5 @@
 import fastifyCors from '@fastify/cors';
+import fastifyJwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastify from 'fastify';
@@ -8,7 +9,6 @@ import {
 	validatorCompiler,
 	type ZodTypeProvider,
 } from 'fastify-type-provider-zod';
-import { AppError } from './lib/errors/AppError';
 import { userRoute } from './routes/user.routes';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -17,6 +17,10 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifyCors, { origin: '*' });
+
+app.register(fastifyJwt, {
+	secret: process.env.JWT_SECRET!,
+});
 
 app.register(fastifySwagger, {
 	openapi: {
@@ -31,18 +35,6 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, {
 	routePrefix: '/docs',
-});
-
-app.setErrorHandler((error, _request, reply) => {
-	if (error instanceof AppError) {
-		return reply.status(error.statusCode).send({ message: error.message });
-	}
-
-	console.error(error);
-
-	return reply.status(500).send({
-		message: 'Internal Server Error',
-	});
 });
 
 app.register(userRoute);
