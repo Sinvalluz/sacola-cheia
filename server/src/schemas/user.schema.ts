@@ -52,3 +52,9 @@ export const ParamsUpdateSchema = z.object({
 });
 
 export type ParamsUpdateRequest = z.infer<typeof ParamsUpdateSchema>;
+
+// delete User
+
+export const ParamsDeleteSchema = ParamsUpdateSchema;
+
+export type ParamsDeleteRequest = z.infer<typeof ParamsUpdateSchema>;

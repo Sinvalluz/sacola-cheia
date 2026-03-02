@@ -1,7 +1,13 @@
 import type { FastifyInstance, FastifyTypeProvider } from 'fastify';
 
-import { authUserHandler, createUserHandler, updateUserHandler } from '../controllers/user.controller';
 import {
+	authUserHandler,
+	createUserHandler,
+	deleteUserHandler,
+	updateUserHandler,
+} from '../controllers/user.controller';
+import {
+	ParamsDeleteSchema,
 	ParamsUpdateSchema,
 	UserAuthResponseSchema,
 	UserAuthSchema,
@@ -42,7 +48,7 @@ export async function userRoute(app: FastifyInstance) {
 		authUserHandler,
 	);
 
-	app.withTypeProvider<FastifyTypeProvider>().put(
+	app.put(
 		'/user/:id',
 		{
 			schema: {
@@ -56,5 +62,11 @@ export async function userRoute(app: FastifyInstance) {
 			},
 		},
 		updateUserHandler,
+	);
+
+	app.delete(
+		'/user/:id',
+		{ schema: { tags: ['users'], description: 'Delete the user', params: ParamsDeleteSchema } },
+		deleteUserHandler,
 	);
 }

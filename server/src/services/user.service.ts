@@ -93,3 +93,29 @@ export async function updateUser(id: number, userRequest: UserUpdateRequest, tok
 				expiresIn: '24h',
 			});
 }
+
+export async function deleteUser(id: number, token: string) {
+	const userEntity = await prisma.user.findUnique({ where: { id } });
+
+	if (!userEntity) throw new AppError('Usuário não encontrado', 404);
+
+	const formattedToken = token.split(' ')[1];
+
+	if (!formattedToken) throw new AppError('Token não enviado', 401);
+
+	jwt.verify(formattedToken, process.env.JWT_SECRET!, (err, user) => {
+		if (err) throw new AppError('Token não autorizado', 401);
+
+		const decodedUser = user as {
+			id: number;
+			email: string;
+			iat: number;
+			exp: number;
+		};
+		if (decodedUser.id !== id) {
+			throw new AppError('Você não tem permissão para deletar este usuário', 403);
+		}
+	});
+
+	await prisma.user.delete({ where: { id } });
+}

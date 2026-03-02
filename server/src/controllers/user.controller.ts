@@ -1,12 +1,13 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { AppError } from '../lib/errors/AppError';
 import type {
+	ParamsDeleteRequest,
 	ParamsUpdateRequest,
 	UserAuthRequest,
 	UserCreateRequest,
 	UserUpdateRequest,
 } from '../schemas/user.schema';
-import { authUser, createUser, updateUser } from '../services/user.service';
+import { authUser, createUser, deleteUser, updateUser } from '../services/user.service';
 
 export async function createUserHandler(request: FastifyRequest<{ Body: UserCreateRequest }>, reply: FastifyReply) {
 	const body = request.body;
@@ -35,4 +36,16 @@ export async function updateUserHandler(
 	const token = await updateUser(id, body, requestToken);
 
 	return reply.send({ token });
+}
+
+export async function deleteUserHandler(request: FastifyRequest<{ Params: ParamsDeleteRequest }>, reply: FastifyReply) {
+	const id = request.params.id;
+
+	const requestToken = request.headers.authorization;
+
+	if (!requestToken) throw new AppError('Token não enviado', 401);
+
+	await deleteUser(id, requestToken);
+
+	return reply.status(204).send();
 }
