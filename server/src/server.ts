@@ -29,6 +29,15 @@ app.register(fastifySwagger, {
 			description: 'Documentação da API do site Sacola cheia',
 			version: '1.0.0',
 		},
+		components: {
+			securitySchemes: {
+				bearerAuth: {
+					type: 'http',
+					scheme: 'bearer',
+					bearerFormat: 'JWT',
+				},
+			},
+		},
 	},
 	transform: jsonSchemaTransform,
 });

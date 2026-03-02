@@ -3,7 +3,13 @@ import { compare, hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { AppError } from '../lib/errors/AppError';
 import { prisma } from '../lib/prisma';
-import type { UserAuthRequest, UserCreateRequest, UserCreateResponse, UserUpdateRequest } from '../schemas/user.schema';
+import type {
+	UserAuthRequest,
+	UserCreateRequest,
+	UserCreateResponse,
+	UserUpdatePasswordRequest,
+	UserUpdateRequest,
+} from '../schemas/user.schema';
 import 'dotenv/config';
 
 export async function createUser(userRequest: UserCreateRequest): Promise<UserCreateResponse> {
@@ -118,4 +124,37 @@ export async function deleteUser(id: number, token: string) {
 	});
 
 	await prisma.user.delete({ where: { id } });
+}
+
+export async function updatePassword(id: number, userRequest: UserUpdatePasswordRequest, token: string) {
+	const userEntity = await prisma.user.findUnique({ where: { id } });
+
+	if (!userEntity) throw new AppError('Usuário não encontrado', 404);
+
+	const formattedToken = token.split(' ')[1];
+
+	if (!formattedToken) throw new AppError('Token não enviado', 401);
+
+	jwt.verify(formattedToken, process.env.JWT_SECRET!, (err, user) => {
+		if (err) throw new AppError('Token não autorizado', 401);
+
+		const decodedUser = user as {
+			id: number;
+			email: string;
+			iat: number;
+			exp: number;
+		};
+		if (decodedUser.id !== id) {
+			throw new AppError('Você não tem permissão para atualizar este usuário', 403);
+		}
+	});
+
+	const isValidPassword = await compare(userRequest.password, userEntity.password);
+
+	if (isValidPassword) throw new AppError('A senha deve ser diferente da última', 400);
+
+	const randomSalt = randomInt(10, 16);
+	const passwordHash = await hash(userRequest.password, randomSalt);
+
+	await prisma.user.update({ where: { id }, data: { password: passwordHash } });
 }

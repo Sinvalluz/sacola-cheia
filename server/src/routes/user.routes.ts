@@ -1,9 +1,10 @@
-import type { FastifyInstance, FastifyTypeProvider } from 'fastify';
-
+import type { FastifyInstance } from 'fastify';
+import z from 'zod';
 import {
 	authUserHandler,
 	createUserHandler,
 	deleteUserHandler,
+	updatePasswordHandler,
 	updateUserHandler,
 } from '../controllers/user.controller';
 import {
@@ -13,6 +14,7 @@ import {
 	UserAuthSchema,
 	UserCreateResponseSchema,
 	UserCreateSchema,
+	UserUpdatePasswordSchema,
 	UserUpdateResponseSchema,
 	UserUpdateSchema,
 } from '../schemas/user.schema';
@@ -59,6 +61,11 @@ export async function userRoute(app: FastifyInstance) {
 				response: {
 					200: UserUpdateResponseSchema,
 				},
+				security: [
+					{
+						bearerAuth: [],
+					},
+				],
 			},
 		},
 		updateUserHandler,
@@ -66,7 +73,42 @@ export async function userRoute(app: FastifyInstance) {
 
 	app.delete(
 		'/user/:id',
-		{ schema: { tags: ['users'], description: 'Delete the user', params: ParamsDeleteSchema } },
+		{
+			schema: {
+				tags: ['users'],
+				description: 'Delete the user',
+				params: ParamsDeleteSchema,
+				response: {
+					204: z.void(),
+				},
+				security: [
+					{
+						bearerAuth: [],
+					},
+				],
+			},
+		},
 		deleteUserHandler,
+	);
+
+	app.put(
+		'/user/password/:id',
+		{
+			schema: {
+				tags: ['users'],
+				description: 'Delete the user',
+				params: ParamsUpdateSchema,
+				body: UserUpdatePasswordSchema,
+				security: [
+					{
+						bearerAuth: [],
+					},
+				],
+				response: {
+					204: z.void(),
+				},
+			},
+		},
+		updatePasswordHandler,
 	);
 }

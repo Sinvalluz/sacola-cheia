@@ -58,3 +58,11 @@ export type ParamsUpdateRequest = z.infer<typeof ParamsUpdateSchema>;
 export const ParamsDeleteSchema = ParamsUpdateSchema;
 
 export type ParamsDeleteRequest = z.infer<typeof ParamsUpdateSchema>;
+
+// Change Password
+
+export const UserUpdatePasswordSchema = z.object({
+	password: z.string({ message: 'A senha é obrigatória' }).min(6, 'A senha deve ter no mínimo 6 caracteres'),
+});
+
+export type UserUpdatePasswordRequest = z.infer<typeof UserUpdatePasswordSchema>;
