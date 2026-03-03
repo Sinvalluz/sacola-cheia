@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import { AppError } from '../lib/errors/AppError';
+import { AppError } from '../lib/errors/AppError.js';
 import type {
 	ParamsDeleteRequest,
 	ParamsUpdateRequest,
@@ -7,8 +7,8 @@ import type {
 	UserCreateRequest,
 	UserUpdatePasswordRequest,
 	UserUpdateRequest,
-} from '../schemas/user.schema';
-import { authUser, createUser, deleteUser, updatePassword, updateUser } from '../services/user.service';
+} from '../schemas/user.schema.js';
+import { authUser, createUser, deleteUser, updatePassword, updateUser } from '../services/user.service.js';
 
 export async function createUserHandler(request: FastifyRequest<{ Body: UserCreateRequest }>, reply: FastifyReply) {
 	const body = request.body;

@@ -6,7 +6,7 @@ import {
 	deleteUserHandler,
 	updatePasswordHandler,
 	updateUserHandler,
-} from '../controllers/user.controller';
+} from '../controllers/user.controller.js';
 import {
 	ParamsDeleteSchema,
 	ParamsUpdateSchema,
@@ -17,7 +17,7 @@ import {
 	UserUpdatePasswordSchema,
 	UserUpdateResponseSchema,
 	UserUpdateSchema,
-} from '../schemas/user.schema';
+} from '../schemas/user.schema.js';
 
 export async function userRoute(app: FastifyInstance) {
 	app.post(

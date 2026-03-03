@@ -1,15 +1,15 @@
 import { randomInt } from 'node:crypto';
 import { compare, hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { AppError } from '../lib/errors/AppError';
-import { prisma } from '../lib/prisma';
+import { AppError } from '../lib/errors/AppError.js';
+import { prisma } from '../lib/prisma.js';
 import type {
 	UserAuthRequest,
 	UserCreateRequest,
 	UserCreateResponse,
 	UserUpdatePasswordRequest,
 	UserUpdateRequest,
-} from '../schemas/user.schema';
+} from '../schemas/user.schema.js';
 import 'dotenv/config';
 
 export async function createUser(userRequest: UserCreateRequest): Promise<UserCreateResponse> {

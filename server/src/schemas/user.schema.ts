@@ -1,5 +1,5 @@
 import z from 'zod';
-import { $Enums } from '../generated/prisma/client';
+import { $Enums } from '../generated/prisma/client.js';
 
 // Create User
 export const UserCreateSchema = z.object({
