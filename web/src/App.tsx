@@ -1,3 +1,9 @@
+import Header from './components/common/Header';
+
 export default function App() {
-	return <h1>Sacola cheia</h1>;
+	return (
+		<div className='bg-white dark:bg-black transition-all duration-150'>
+			<Header />
+		</div>
+	);
 }

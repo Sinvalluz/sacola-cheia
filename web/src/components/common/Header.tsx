@@ -1,0 +1,22 @@
+import DarkLightBtn from '../ui/darkLightBtn';
+import GithubIcon from '../ui/githubIcon';
+
+export default function Header() {
+	return (
+		<header className='flex justify-between px-6 py-4 items-center'>
+			<a href='/'>
+				<h1 className='text-2xl font-semibold'>Sacola cheia</h1>
+			</a>
+			<div className='flex gap-4 items-center'>
+				<DarkLightBtn />
+				<a
+					href='https://github.com/Sinvalluz/sacola-cheia'
+					target='_blank'
+					rel='noreferrer'
+				>
+					<GithubIcon />
+				</a>
+			</div>
+		</header>
+	);
+}
