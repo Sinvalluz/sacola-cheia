@@ -4,21 +4,23 @@ import { Input } from '@/components/ui/input';
 
 type FormInputProps = InputHTMLAttributes<HTMLInputElement> & {
 	error?: string | undefined;
+	placeholder: string;
+	type: 'email' | 'password' | 'text';
 };
 
-export default function FormInput({ error, placeholder, type }: FormInputProps) {
+export default function FormInput({ error, ...props }: FormInputProps) {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
-	const isPassword = type === 'password';
-	const inputType = isPassword && showPassword ? 'text' : type;
+	const isPassword = props.type === 'password';
+	const inputType = isPassword && showPassword ? 'text' : props.type;
 	const Icon = showPassword ? Eye : EyeClosed;
 	return (
-		<div>
+		<div className='h-14'>
 			<div className='relative'>
 				<Input
+					{...props}
 					type={inputType}
 					className='bg-blue-50 focus-visible:ring-blue-500 border border-blue-600'
-					placeholder={placeholder}
 				/>
 
 				{isPassword && (
@@ -30,6 +32,15 @@ export default function FormInput({ error, placeholder, type }: FormInputProps) 
 					/>
 				)}
 			</div>
+
+			{error && (
+				<p
+					className='text-red-500 text-xs mt-1 
+		animate-in fade-in slide-in-from-top-1 duration-300'
+				>
+					{error}
+				</p>
+			)}
 		</div>
 	);
 }

@@ -1,9 +1,16 @@
-import type { ReactNode } from 'react';
+import type { FormHTMLAttributes, ReactNode } from 'react';
 
-type FormRootProps = {
+type FormRootProps = FormHTMLAttributes<HTMLFormElement> & {
 	children: ReactNode;
 };
 
-export default function FormRoot({ children }: FormRootProps) {
-	return <form className='flex flex-col gap-4'>{children}</form>;
+export default function FormRoot({ children, ...props }: FormRootProps) {
+	return (
+		<form
+			className='flex flex-col gap-3'
+			{...props}
+		>
+			{children}
+		</form>
+	);
 }
