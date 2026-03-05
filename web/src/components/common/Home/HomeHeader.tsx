@@ -1,7 +1,7 @@
-import DarkLightBtn from '../ui/darkLightBtn';
-import GithubIcon from '../ui/githubIcon';
+import DarkLightBtn from '@/components/ui/darkLightBtn';
+import GithubIcon from '@/components/ui/githubIcon';
 
-export default function Header() {
+export default function HomeHeader() {
 	return (
 		<header className='flex justify-between px-6 py-4 items-center'>
 			<a href='/'>

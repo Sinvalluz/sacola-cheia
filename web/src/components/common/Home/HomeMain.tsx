@@ -1,7 +1,8 @@
+import { NavLink } from 'react-router';
 import sacolaDeCompras from '@/assets/Sacola-de-compras.png';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
-export default function Main() {
+export default function HomeMain() {
 	return (
 		<main className='h-full flex flex-col items-center gap-6'>
 			<img
@@ -21,11 +22,14 @@ export default function Main() {
 			</div>
 
 			<div className='space-x-4'>
-				<Button className='cursor-pointer bg-black text-white dark:bg-white dark:text-black'>
-					<a href={'/login'}>Login</a>
+				<Button className='cursor-pointer'>
+					<NavLink to={'/login'}>Login</NavLink>
 				</Button>
-				<Button className='cursor-pointer bg-white dark:bg-black dark:text-white'>
-					<a href={'/register'}>Cadastro</a>
+				<Button
+					className='cursor-pointer'
+					variant={'secondary'}
+				>
+					<NavLink to={'/register'}>Cadastro</NavLink>
 				</Button>
 			</div>
 		</main>

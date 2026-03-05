@@ -34,7 +34,8 @@
 				"noImgElement": "off"
 			},
 			"a11y": {
-				"noSvgWithoutTitle": "off"
+				"noSvgWithoutTitle": "off",
+				"useValidLang": "off"
 			}
 		},
 

@@ -1,9 +1,7 @@
 import type { SVGProps } from 'react';
 import type { JSX } from 'react/jsx-runtime';
 
-export default function GithubIcon(
-	props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
-) {
+export default function GithubIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
