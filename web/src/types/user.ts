@@ -6,9 +6,18 @@ export type UserRequestRegister = {
 
 export type UserResponseRegister = {
 	id: number;
-    email: string;
-    name: string;
-    role: "ADMIN" | "USER";
-    createdAt: Date;
-    updatedAt: Date;
+	email: string;
+	name: string;
+	role: 'ADMIN' | 'USER';
+	createdAt: Date;
+	updatedAt: Date;
+};
+
+export type UserRequestLogin = {
+	email: string;
+	password: string;
+};
+
+export type UserResponseLogin = {
+	token: string;
 };

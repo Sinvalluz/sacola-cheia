@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { NavLink, redirect, useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import z from 'zod';
 import { Spinner } from '@/components/ui/spinner';
 import postRegister from '@/services/postRegister';
