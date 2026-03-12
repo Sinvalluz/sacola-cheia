@@ -1,6 +1,6 @@
 import { Moon, Sun } from 'lucide-react';
-import { useTheme } from '../providers/theme-provider';
-import { Button } from './button';
+import { useTheme } from '../../contexts/theme-provider';
+import { Button } from './Button';
 
 const DarkLightBtn = () => {
 	const { theme, setTheme } = useTheme();

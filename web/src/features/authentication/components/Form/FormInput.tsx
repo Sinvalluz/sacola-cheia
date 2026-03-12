@@ -1,6 +1,6 @@
 import { Eye, EyeClosed } from 'lucide-react';
 import { type InputHTMLAttributes, useState } from 'react';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/Input';
 
 type FormInputProps = InputHTMLAttributes<HTMLInputElement> & {
 	error?: string | undefined;

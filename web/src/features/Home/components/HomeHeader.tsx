@@ -1,5 +1,5 @@
-import DarkLightBtn from '@/components/ui/darkLightBtn';
-import GithubIcon from '@/components/ui/githubIcon';
+import DarkLightBtn from '@/components/ui/DarkLightBtn';
+import GithubIcon from '@/components/ui/GithubIcon';
 
 export default function HomeHeader() {
 	return (

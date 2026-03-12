@@ -1,5 +1,4 @@
-import HomeHeader from '@/components/common/Home/HomeHeader';
-import HomeMain from '@/components/common/Home/HomeMain';
+import { HomeHeader, HomeMain } from '@/features/Home';
 
 export default function Home() {
 	return (

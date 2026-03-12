@@ -3,9 +3,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router';
 import z from 'zod';
-import { Spinner } from '@/components/ui/spinner';
-import postLogin from '@/services/postLogin';
-import { Form } from '../Form';
+import { Spinner } from '@/components/ui/Spinner';
+import { Form } from '@/features/authentication/components/Form';
+import { login } from '../services/login';
 
 const FormLoginDataSchema = z.object({
 	email: z.email('Digite um email válido'),
@@ -26,7 +26,7 @@ export default function LoginForm() {
 	const navigate = useNavigate();
 
 	const { isPending, mutate } = useMutation({
-		mutationFn: postLogin,
+		mutationFn: login,
 		onSuccess: (data) => {
 			console.log(data);
 			throw navigate('/');

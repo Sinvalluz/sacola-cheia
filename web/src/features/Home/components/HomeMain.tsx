@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router';
 import sacolaDeCompras from '@/assets/Sacola-de-compras.png';
-import { Button } from '../../ui/button';
+import { Button } from '../../../components/ui/Button';
 
 export default function HomeMain() {
 	return (

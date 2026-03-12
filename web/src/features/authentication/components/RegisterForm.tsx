@@ -3,9 +3,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router';
 import z from 'zod';
-import { Spinner } from '@/components/ui/spinner';
-import postRegister from '@/services/postRegister';
-import { Form } from '../Form';
+import { Spinner } from '@/components/ui/Spinner';
+import { signup } from '../services/signup';
+import { Form } from './Form';
 
 const FormRegisterDataSchema = z
 	.object({
@@ -33,7 +33,7 @@ export default function RegisterForm() {
 	const navigate = useNavigate();
 
 	const { isPending, mutate } = useMutation({
-		mutationFn: postRegister,
+		mutationFn: signup,
 		onSuccess: (data) => {
 			console.log(data);
 			throw navigate('/');
